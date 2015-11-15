@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.MediaController;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private void createListview() {
 
         //setup Array
-        String[] strings = new String[20];
+        final String[] strings = new String[20];
         strings[0] = "ห้ามเลี้ยวซ้าย";
         strings[1] = "ห้ามเลี้ยวขวา";
         strings[2] = "ตรงไป";
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         strings[18] = "จำกัดความกว้าง";
         strings[19] = "จำกัดความสูง";
 
-        int[] intsicon = {R.drawable.traffic_01,
+        final int[] intsicon = {R.drawable.traffic_01,
 
                 R.drawable.traffic_02,
                 R.drawable.traffic_03,
@@ -79,6 +80,21 @@ public class MainActivity extends AppCompatActivity {
         MyAdapter objAdapter = new MyAdapter(MainActivity.this, strings, intsicon);
 
         TrafficListView.setAdapter(objAdapter);
+
+        TrafficListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                Intent objIntent = new Intent(MainActivity.this, DetailActivity.class);
+                objIntent.putExtra ("Title", strings[position]);
+                objIntent.putExtra("Image", intsicon);
+                objIntent.putExtra("Index", position);
+                startActivity(objIntent);
+
+            } //event
+        });
+
     }   // CreateListview
 
     private void buttoncontriior() {
